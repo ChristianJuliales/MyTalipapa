@@ -733,6 +733,11 @@ export default function MarketTour360() {
 
   const findNearestStallInDirection = (currentStall, currentCompassAngle) => {
     const currentCoords = getRawCoordinates(currentStall, activeSectionKey);
+    // Correct the 3D map navigation physical origin for meat-2 without affecting minimap
+    if (activeSectionKey === 'meat' && currentStall.id === '2') {
+      currentCoords.y = 730;
+    }
+
     let bestMatch = null;
     let minDistance = Infinity;
 
@@ -744,6 +749,10 @@ export default function MarketTour360() {
         if (secKey === activeSectionKey && stall.id === currentStall.id) return;
 
         const targetCoords = getRawCoordinates(stall, secKey);
+        // Correct the 3D map navigation target coordinates for meat-2 without affecting minimap
+        if (secKey === 'meat' && stall.id === '2') {
+          targetCoords.y = 730;
+        }
 
         const dx = targetCoords.x - currentCoords.x;
         const dy = targetCoords.y - currentCoords.y;
