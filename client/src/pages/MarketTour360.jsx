@@ -441,9 +441,6 @@ export default function MarketTour360() {
   const [sectionDropdownOpen, setSectionDropdownOpen] = useState(false)
   const [privacyMode, setPrivacyMode] = useState(true)
   const [stallDropdownOpen, setStallDropdownOpen] = useState(false)
-  const [dualStallSelected, setDualStallSelected] = useState(null)
-  // null = showing primary (activeSectionKey/stallIndex)
-  // { section, id } = showing the paired stall's details
   const [isMapExpanded, setIsMapExpanded] = useState(false) // NEW State for split-screen map
 
   // Floating Tooltip State
@@ -467,7 +464,6 @@ export default function MarketTour360() {
   // Sync details sheet when stall changes
   useEffect(() => {
     setSelectedStall(currentStall)
-    setDualStallSelected(null) // reset dual selection on stall change
   }, [currentStall])
 
   // Track active references to prevent stale closures in events
@@ -1318,14 +1314,6 @@ export default function MarketTour360() {
       })()
     : null;
 
-  const activeDetailsStall = dualStallSelected
-    ? sectionsData[dualStallSelected.section]?.stalls.find(s => s.id === dualStallSelected.id) || currentStall
-    : currentStall;
-
-  const activeDetailsSectionName = dualStallSelected
-    ? SECTIONS[dualStallSelected.section]?.name || activeSectionKey
-    : activeSection.name;
-
   return (
     <div className="relative w-full bg-black overflow-hidden font-sans select-none" style={{ height: 'calc(var(--vh, 1vh) * 100)' }}>
       {/* 360 ThreeJS Viewer Mount */}
@@ -1550,7 +1538,7 @@ export default function MarketTour360() {
           >
             <span>
               {sharedPair 
-                ? `${currentStall.name} / ${pairedStall.sectionName} - Stall #${pairedStall.stall?.id}`
+                ? `Shared Location: ${currentStall.name} & ${pairedStall.sectionName} Stall #${pairedStall.stall?.id}`
                 : `${currentStall.name} (${stallIndex + 1}/${activeSection.stalls.length})`
               }
             </span>
@@ -1559,36 +1547,7 @@ export default function MarketTour360() {
 
           {stallDropdownOpen && (
             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 bg-white/95 backdrop-blur-md border border-black/10 rounded-2xl p-1.5 shadow-2xl z-50 flex flex-col gap-0.5 min-w-[200px] max-h-[220px] overflow-y-auto">
-              {sharedPair && (
-                <>
-                  <div className="px-3 pt-1 pb-0.5 text-[9px] font-black text-slate-400 uppercase tracking-wider">Shared Location</div>
-                  <button
-                    onClick={() => {
-                      setDualStallSelected(null)
-                      setStallDropdownOpen(false)
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${
-                      dualStallSelected === null ? 'bg-[#1a5c2a] text-white' : 'text-slate-700 hover:bg-black/5'
-                    }`}
-                  >
-                    {activeSection.name} — {currentStall.name}
-                  </button>
-                  <button
-                    onClick={() => {
-                      setDualStallSelected({ section: pairedStall.section, id: pairedStall.stall?.id })
-                      setStallDropdownOpen(false)
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${
-                      dualStallSelected?.id === pairedStall.stall?.id && dualStallSelected?.section === pairedStall.section
-                        ? 'bg-[#1a5c2a] text-white' : 'text-slate-700 hover:bg-black/5'
-                    }`}
-                  >
-                    {pairedStall.sectionName} — Stall #{pairedStall.stall?.id}
-                  </button>
-                  <div className="h-px bg-black/10 my-1 mx-2" />
-                  <div className="px-3 pt-1 pb-0.5 text-[9px] font-black text-slate-400 uppercase tracking-wider">All Stalls</div>
-                </>
-              )}
+              <div className="px-3 pt-1 pb-0.5 text-[9px] font-black text-slate-400 uppercase tracking-wider">All Stalls in {activeSection.name}</div>
               {activeSection.stalls.map((st, idx) => (
                 <button
                   key={st.id}
@@ -1598,7 +1557,7 @@ export default function MarketTour360() {
                     setStallDropdownOpen(false)
                   }}
                   className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${
-                    !dualStallSelected && idx === stallIndex
+                    idx === stallIndex
                     ? 'bg-[#1a5c2a] text-white'
                     : 'text-slate-700 hover:bg-black/5'
                     }`}
@@ -1675,81 +1634,88 @@ export default function MarketTour360() {
       </div>
 
       {/* STALL DETAILS DRAWER (Bottom Panel) */}
-      {activeDetailsStall && uiVisible && !detailsCollapsed && (
+      {selectedStall && uiVisible && !detailsCollapsed && (
         <div className="absolute bottom-16 md:bottom-0 left-0 right-0 z-20 px-4 pb-4">
-          <div className="max-w-2xl mx-auto relative">
-            <div className="max-w-2xl mx-auto bg-white/95 backdrop-blur-md rounded-3xl p-5 border border-black/10 shadow-2xl flex flex-col md:flex-row gap-5 relative overflow-hidden">
-              {/* Collapse Toggle */}
-              <button
-                onClick={() => setDetailsCollapsed(true)}
-                className="absolute top-3 right-3 z-30 bg-white/80 hover:bg-white border border-black/10 rounded-full p-1.5 text-slate-600 hover:text-slate-900 transition-colors shadow-sm cursor-pointer"
-                title="Collapse details"
-              >
-                <ChevronDown size={16} />
-              </button>
-              {/* Background Ambient Glow */}
-              <div className={`absolute -right-32 -bottom-32 w-64 h-64 rounded-full bg-gradient-to-br ${SECTIONS[dualStallSelected?.section || activeSectionKey]?.bgTheme} blur-3xl opacity-40 pointer-events-none`} />
+          <div className="max-w-4xl mx-auto relative flex gap-4 overflow-x-auto snap-x snap-mandatory pb-2 scrollbar-hide">
+            {[
+              { stall: selectedStall, sectionName: activeSection.name, bgTheme: activeSection.bgTheme },
+              ...(sharedPair && pairedStall?.stall ? [{ stall: pairedStall.stall, sectionName: pairedStall.sectionName, bgTheme: SECTIONS[pairedStall.section]?.bgTheme }] : [])
+            ].map((detail, index) => (
+              <div key={detail.stall.id + index} className="min-w-[85vw] sm:min-w-[400px] max-w-2xl flex-1 bg-white/95 backdrop-blur-md rounded-3xl p-5 border border-black/10 shadow-2xl flex flex-col md:flex-row gap-5 relative overflow-hidden snap-center">
+                {/* Collapse Toggle */}
+                {index === 0 && (
+                  <button
+                    onClick={() => setDetailsCollapsed(true)}
+                    className="absolute top-3 right-3 z-30 bg-white/80 hover:bg-white border border-black/10 rounded-full p-1.5 text-slate-600 hover:text-slate-900 transition-colors shadow-sm cursor-pointer"
+                    title="Collapse details"
+                  >
+                    <ChevronDown size={16} />
+                  </button>
+                )}
+                {/* Background Ambient Glow */}
+                <div className={`absolute -right-32 -bottom-32 w-64 h-64 rounded-full bg-gradient-to-br ${detail.bgTheme || 'from-slate-200 to-slate-300'} blur-3xl opacity-40 pointer-events-none`} />
 
-              {/* Main Info */}
-              <div className="flex-1 min-w-0 z-10">
-                <div className="flex items-center gap-2 mb-2 flex-wrap">
-                  <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wider bg-black/10 text-slate-800">
-                    {activeDetailsStall.zone}
-                  </span>
-                </div>
-                <h3 className="text-lg font-black text-slate-900 truncate leading-tight">
-                  {activeDetailsStall.name}
-                </h3>
-                <p className="text-xs text-slate-600 mt-1 flex flex-col gap-0.5">
-                  <span>Category: {activeDetailsSectionName}</span>
-                  <span className="text-[10px] text-slate-500 font-medium">Utilities: {activeDetailsStall.utilities}</span>
-                </p>
+                {/* Main Info */}
+                <div className="flex-1 min-w-0 z-10">
+                  <div className="flex items-center gap-2 mb-2 flex-wrap">
+                    <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wider bg-black/10 text-slate-800">
+                      {detail.stall.zone}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-black text-slate-900 truncate leading-tight">
+                    {detail.stall.name}
+                  </h3>
+                  <p className="text-xs text-slate-600 mt-1 flex flex-col gap-0.5">
+                    <span>Category: {detail.sectionName}</span>
+                    <span className="text-[10px] text-slate-500 font-medium">Utilities: {detail.stall.utilities}</span>
+                  </p>
 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-3 mt-4">
-                  <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                    <Zap size={15} className="text-[#1a5c2a] shrink-0" />
-                    <div>
-                      <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Electricity</p>
-                      <p className="text-xs font-bold text-slate-800">{activeDetailsStall.electricitySetup}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                    <MapPin size={15} className="text-[#1a5c2a] shrink-0" />
-                    <div>
-                      <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Water Access</p>
-                      <p className="text-xs font-bold text-slate-800">{activeDetailsStall.waterAccess}</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                    <User size={15} className="text-[#1a5c2a] shrink-0" />
-                    <div>
-                      <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contractor</p>
-                      <p className="text-xs font-bold text-slate-800">{activeDetailsStall.contractorName || 'None'}</p>
-                    </div>
-                  </div>
-                  {activeDetailsStall.contractorName && activeDetailsStall.contractorName !== 'None' && (
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-2 gap-3 mt-4">
                     <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                      <Phone size={15} className="text-[#1a5c2a] shrink-0" />
+                      <Zap size={15} className="text-[#1a5c2a] shrink-0" />
                       <div>
-                        <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contact</p>
-                        <p className="text-xs font-bold text-slate-800">{activeDetailsStall.contractorContact || 'N/A'}</p>
+                        <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Electricity</p>
+                        <p className="text-xs font-bold text-slate-800">{detail.stall.electricitySetup}</p>
                       </div>
                     </div>
-                  )}
+                    <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
+                      <MapPin size={15} className="text-[#1a5c2a] shrink-0" />
+                      <div>
+                        <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Water Access</p>
+                        <p className="text-xs font-bold text-slate-800">{detail.stall.waterAccess}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
+                      <User size={15} className="text-[#1a5c2a] shrink-0" />
+                      <div>
+                        <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contractor</p>
+                        <p className="text-xs font-bold text-slate-800">{detail.stall.contractorName || 'None'}</p>
+                      </div>
+                    </div>
+                    {detail.stall.contractorName && detail.stall.contractorName !== 'None' && (
+                      <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
+                        <Phone size={15} className="text-[#1a5c2a] shrink-0" />
+                        <div>
+                          <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contact</p>
+                          <p className="text-xs font-bold text-slate-800">{detail.stall.contractorContact || 'N/A'}</p>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
 
-              {/* Price Details Block */}
-              <div className="w-full md:w-52 shrink-0 flex flex-col justify-center border-t md:border-t-0 md:border-l border-black/10 pt-4 md:pt-0 md:pl-5 z-10">
-                <div>
-                  <p className="text-xl sm:text-2xl font-black text-[#e07b00] leading-none whitespace-nowrap">
-                    {activeDetailsStall.price}
-                  </p>
-                  <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-1">per month (negotiable)</p>
+                {/* Price Details Block */}
+                <div className="w-full md:w-52 shrink-0 flex flex-col justify-center border-t md:border-t-0 md:border-l border-black/10 pt-4 md:pt-0 md:pl-5 z-10">
+                  <div>
+                    <p className="text-xl sm:text-2xl font-black text-[#e07b00] leading-none whitespace-nowrap">
+                      {detail.stall.price}
+                    </p>
+                    <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-1">per month (negotiable)</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         </div>
       )}
