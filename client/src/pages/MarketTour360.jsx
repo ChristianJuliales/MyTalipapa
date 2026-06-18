@@ -987,17 +987,45 @@ export default function MarketTour360() {
         camera.lookAt(x, y, z)
 
         let northOffset = 0;
-        const upsideDownStalls = ['13(u)', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'];
-        const zoneAFishUpsideDown = ['11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
+        const currentStallId = stateRef.current.currentStall ? stateRef.current.currentStall.id : null;
+        const activeSection = stateRef.current.activeSectionKey;
+
+        // --- EXISTING CONDITIONS ---
+        // Meat section
+        const zoneEMeatUpsideDown = ['13(u)', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'];
         const zoneAMeatUpsideDown = ['12', '13'];
+        // Fish section
+        const zoneAFishUpsideDown = ['11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
 
-        const isZoneEMeat = stateRef.current.activeSectionKey === 'meat' && upsideDownStalls.includes(stateRef.current.currentStall.id);
-        const isZoneAFish = stateRef.current.activeSectionKey === 'fish' && zoneAFishUpsideDown.includes(stateRef.current.currentStall.id);
-        const isZoneAMeat = stateRef.current.activeSectionKey === 'meat' && zoneAMeatUpsideDown.includes(stateRef.current.currentStall.id);
+        // --- NEW CONDITIONS ---
+        // 1. Veggies using meat hallway images (Zone E)
+        const veggiesMeatHallwayUpsideDown = ['5', '6', '7', '11', '12'];
+        // 2. Meat Section (Zone F) sharing hallway
+        const zoneFMeatUpsideDown = ['8(u2)', '9(u2)', '10(u2)'];
+        // 3. Fish sharing meat Zone A hallway
+        const fishMeatZoneAUpsideDown = ['22', '23'];
+        // 4. Fish using meat Zone C hallway
+        const fishMeatZoneCUpsideDown = ['61', '62', '63', '64', '65', '66'];
+        // 5. Veggies opposite side stalls
+        const veggiesOppositeUpsideDown = ['13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60'];
 
-        if (stateRef.current.currentStall && stateRef.current.currentStall.id === '1(u)') {
+        // --- LOGIC EVALUATION ---
+        const isZoneEMeat = activeSection === 'meat' && zoneEMeatUpsideDown.includes(currentStallId);
+        const isZoneAMeat = activeSection === 'meat' && zoneAMeatUpsideDown.includes(currentStallId);
+        const isZoneFMeat = activeSection === 'meat' && zoneFMeatUpsideDown.includes(currentStallId);
+
+        const isZoneAFish = activeSection === 'fish' && zoneAFishUpsideDown.includes(currentStallId);
+        const isFishMeatZoneA = activeSection === 'fish' && fishMeatZoneAUpsideDown.includes(currentStallId);
+        const isFishMeatZoneC = activeSection === 'fish' && fishMeatZoneCUpsideDown.includes(currentStallId);
+
+        const isVeggiesMeatHallway = activeSection === 'veggies' && veggiesMeatHallwayUpsideDown.includes(currentStallId);
+        const isVeggiesOpposite = activeSection === 'veggies' && veggiesOppositeUpsideDown.includes(currentStallId);
+
+        const needs180Offset = isZoneEMeat || isZoneAMeat || isZoneFMeat || isZoneAFish || isFishMeatZoneA || isFishMeatZoneC || isVeggiesMeatHallway || isVeggiesOpposite;
+
+        if (currentStallId === '1(u)' && activeSection === 'meat') {
           northOffset = -90; // Calibrate left turn to point to Stall #13
-        } else if (stateRef.current.currentStall && (isZoneEMeat || isZoneAFish || isZoneAMeat)) {
+        } else if (needs180Offset) {
           northOffset = 180; // Correct cone to align with the actual camera orientation for the entire row
         }
 
