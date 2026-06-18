@@ -1477,8 +1477,10 @@ export default function MarketTour360() {
         <div
           className={`absolute transition-all duration-500 ease-in-out z-30 overflow-hidden bg-slate-200 shadow-2xl 
           ${isMapExpanded
-              ? 'bottom-0 left-0 w-full h-1/2 rounded-t-3xl border-t-4 border-black/20'
-              : 'bottom-24 left-3 sm:bottom-6 sm:left-6 w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 rounded-2xl border border-black/20'
+              ? 'bottom-0 left-0 w-full h-1/2 rounded-t-3xl border-t-4 border-black/20 opacity-100 pointer-events-auto'
+              : `bottom-24 left-3 sm:bottom-6 sm:left-6 w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 rounded-2xl border border-black/20 ${
+                  !detailsCollapsed ? 'opacity-0 pointer-events-none sm:opacity-100 sm:pointer-events-auto' : 'opacity-100 pointer-events-auto'
+                }`
             }`}
         >
           {/* Expand/Collapse Toggle Button */}
