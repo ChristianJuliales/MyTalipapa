@@ -1559,8 +1559,9 @@ export default function MarketTour360() {
 
           {stallDropdownOpen && (
             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 bg-white/95 backdrop-blur-md border border-black/10 rounded-2xl p-1.5 shadow-2xl z-50 flex flex-col gap-0.5 min-w-[200px] max-h-[220px] overflow-y-auto">
-              {sharedPair ? (
+              {sharedPair && (
                 <>
+                  <div className="px-3 pt-1 pb-0.5 text-[9px] font-black text-slate-400 uppercase tracking-wider">Shared Location</div>
                   <button
                     onClick={() => {
                       setDualStallSelected(null)
@@ -1584,25 +1585,27 @@ export default function MarketTour360() {
                   >
                     {pairedStall.sectionName} — Stall #{pairedStall.stall?.id}
                   </button>
+                  <div className="h-px bg-black/10 my-1 mx-2" />
+                  <div className="px-3 pt-1 pb-0.5 text-[9px] font-black text-slate-400 uppercase tracking-wider">All Stalls</div>
                 </>
-              ) : (
-                activeSection.stalls.map((st, idx) => (
-                  <button
-                    key={st.id}
-                    onClick={() => {
-                      setStallIndex(idx)
-                      triggerSceneTransition(getStallImagePath(st.id, activeSectionKey))
-                      setStallDropdownOpen(false)
-                    }}
-                    className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${idx === stallIndex
-                      ? 'bg-[#1a5c2a] text-white'
-                      : 'text-slate-700 hover:bg-black/5'
-                      }`}
-                  >
-                    {st.name}
-                  </button>
-                ))
               )}
+              {activeSection.stalls.map((st, idx) => (
+                <button
+                  key={st.id}
+                  onClick={() => {
+                    setStallIndex(idx)
+                    triggerSceneTransition(getStallImagePath(st.id, activeSectionKey))
+                    setStallDropdownOpen(false)
+                  }}
+                  className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${
+                    !dualStallSelected && idx === stallIndex
+                    ? 'bg-[#1a5c2a] text-white'
+                    : 'text-slate-700 hover:bg-black/5'
+                    }`}
+                >
+                  {st.name}
+                </button>
+              ))}
             </div>
           )}
         </div>
