@@ -161,6 +161,86 @@ const generateStalls = (category, numbers) => {
   });
 };
 
+const SHARED_HALLWAY_PAIRS = [
+  // Zone E/F hallway — meat left side, veggies/meat right side
+  { a: { section: 'meat', id: '17' },  b: { section: 'veggies', id: '5'  } },
+  { a: { section: 'meat', id: '18' },  b: { section: 'veggies', id: '6'  } },
+  { a: { section: 'meat', id: '19' },  b: { section: 'veggies', id: '7'  } },
+  { a: { section: 'meat', id: '23' },  b: { section: 'veggies', id: '11' } },
+  { a: { section: 'meat', id: '24' },  b: { section: 'veggies', id: '12' } },
+  { a: { section: 'meat', id: '13(u)'},b: { section: 'meat',    id: '1(u2)'} },
+  { a: { section: 'meat', id: '14' },  b: { section: 'meat',    id: '2(u2)'} },
+  { a: { section: 'meat', id: '15' },  b: { section: 'meat',    id: '3(u2)'} },
+  { a: { section: 'meat', id: '16' },  b: { section: 'meat',    id: '4(u2)'} },
+  // Zone A hallway — fish/meat shared
+  { a: { section: 'meat', id: '12' },  b: { section: 'fish',    id: '22' } },
+  { a: { section: 'meat', id: '13' },  b: { section: 'fish',    id: '23' } },
+  { a: { section: 'fish', id: '11' },  b: { section: 'fish',    id: '21' } },
+  { a: { section: 'fish', id: '14' },  b: { section: 'fish',    id: '24' } },
+  { a: { section: 'fish', id: '15' },  b: { section: 'fish',    id: '25' } },
+  { a: { section: 'fish', id: '16' },  b: { section: 'fish',    id: '26' } },
+  { a: { section: 'fish', id: '17' },  b: { section: 'fish',    id: '27' } },
+  { a: { section: 'fish', id: '18' },  b: { section: 'fish',    id: '28' } },
+  { a: { section: 'fish', id: '19' },  b: { section: 'fish',    id: '29' } },
+  { a: { section: 'fish', id: '20' },  b: { section: 'fish',    id: '30' } },
+  // Zone C hallway — fish opposite sides
+  { a: { section: 'fish', id: '31' },  b: { section: 'fish',    id: '41' } },
+  { a: { section: 'fish', id: '32' },  b: { section: 'fish',    id: '42' } },
+  { a: { section: 'fish', id: '33' },  b: { section: 'fish',    id: '43' } },
+  { a: { section: 'fish', id: '34' },  b: { section: 'fish',    id: '44' } },
+  { a: { section: 'fish', id: '35' },  b: { section: 'fish',    id: '45' } },
+  { a: { section: 'fish', id: '36' },  b: { section: 'fish',    id: '46' } },
+  { a: { section: 'fish', id: '37' },  b: { section: 'fish',    id: '47' } },
+  { a: { section: 'fish', id: '38' },  b: { section: 'fish',    id: '48' } },
+  { a: { section: 'fish', id: '39' },  b: { section: 'fish',    id: '49' } },
+  { a: { section: 'fish', id: '40' },  b: { section: 'fish',    id: '50' } },
+  // Zone C hallway — meat vs fish
+  { a: { section: 'meat', id: '51' },  b: { section: 'fish',    id: '61' } },
+  { a: { section: 'meat', id: '52' },  b: { section: 'fish',    id: '62' } },
+  { a: { section: 'meat', id: '53' },  b: { section: 'fish',    id: '63' } },
+  { a: { section: 'meat', id: '54' },  b: { section: 'fish',    id: '64' } },
+  { a: { section: 'meat', id: '55' },  b: { section: 'fish',    id: '65' } },
+  { a: { section: 'meat', id: '56' },  b: { section: 'fish',    id: '66' } },
+  // Zone D hallway — fish opposite sides
+  { a: { section: 'fish', id: '57' },  b: { section: 'fish',    id: '67' } },
+  { a: { section: 'fish', id: '58' },  b: { section: 'fish',    id: '68' } },
+  { a: { section: 'fish', id: '59' },  b: { section: 'fish',    id: '69' } },
+  { a: { section: 'fish', id: '60' },  b: { section: 'fish',    id: '70' } },
+  // Zone G hallway — veggies opposite sides
+  { a: { section: 'veggies', id: '25' }, b: { section: 'veggies', id: '37' } },
+  { a: { section: 'veggies', id: '26' }, b: { section: 'veggies', id: '38' } },
+  { a: { section: 'veggies', id: '27' }, b: { section: 'veggies', id: '39' } },
+  { a: { section: 'veggies', id: '28' }, b: { section: 'veggies', id: '40' } },
+  { a: { section: 'veggies', id: '29' }, b: { section: 'veggies', id: '41' } },
+  { a: { section: 'veggies', id: '30' }, b: { section: 'veggies', id: '42' } },
+  { a: { section: 'veggies', id: '31' }, b: { section: 'veggies', id: '43' } },
+  { a: { section: 'veggies', id: '32' }, b: { section: 'veggies', id: '44' } },
+  { a: { section: 'veggies', id: '33' }, b: { section: 'veggies', id: '45' } },
+  { a: { section: 'veggies', id: '34' }, b: { section: 'veggies', id: '46' } },
+  { a: { section: 'veggies', id: '35' }, b: { section: 'veggies', id: '47' } },
+  { a: { section: 'veggies', id: '36' }, b: { section: 'veggies', id: '48' } },
+  // Zone H hallway — veggies opposite sides
+  { a: { section: 'veggies', id: '50' }, b: { section: 'veggies', id: '61' } },
+  { a: { section: 'veggies', id: '51' }, b: { section: 'veggies', id: '62' } },
+  { a: { section: 'veggies', id: '52' }, b: { section: 'veggies', id: '63' } },
+  { a: { section: 'veggies', id: '53' }, b: { section: 'veggies', id: '64' } },
+  { a: { section: 'veggies', id: '54' }, b: { section: 'veggies', id: '65' } },
+  { a: { section: 'veggies', id: '55' }, b: { section: 'veggies', id: '66' } },
+  { a: { section: 'veggies', id: '56' }, b: { section: 'veggies', id: '67' } },
+  { a: { section: 'veggies', id: '57' }, b: { section: 'veggies', id: '68' } },
+  { a: { section: 'veggies', id: '58' }, b: { section: 'veggies', id: '69' } },
+  { a: { section: 'veggies', id: '59' }, b: { section: 'veggies', id: '70' } },
+  { a: { section: 'veggies', id: '60' }, b: { section: 'veggies', id: '71' } },
+];
+
+const getSharedPair = (stallId, sectionKey) => {
+  return SHARED_HALLWAY_PAIRS.find(
+    pair =>
+      (pair.a.section === sectionKey && pair.a.id === stallId) ||
+      (pair.b.section === sectionKey && pair.b.id === stallId)
+  ) || null;
+};
+
 const SECTIONS = {
   meat: {
     id: 'meat',
@@ -361,6 +441,9 @@ export default function MarketTour360() {
   const [sectionDropdownOpen, setSectionDropdownOpen] = useState(false)
   const [privacyMode, setPrivacyMode] = useState(true)
   const [stallDropdownOpen, setStallDropdownOpen] = useState(false)
+  const [dualStallSelected, setDualStallSelected] = useState(null)
+  // null = showing primary (activeSectionKey/stallIndex)
+  // { section, id } = showing the paired stall's details
   const [isMapExpanded, setIsMapExpanded] = useState(false) // NEW State for split-screen map
 
   // Floating Tooltip State
@@ -384,6 +467,7 @@ export default function MarketTour360() {
   // Sync details sheet when stall changes
   useEffect(() => {
     setSelectedStall(currentStall)
+    setDualStallSelected(null) // reset dual selection on stall change
   }, [currentStall])
 
   // Track active references to prevent stale closures in events
@@ -1219,6 +1303,29 @@ export default function MarketTour360() {
 
   // No inquiry handling needed
 
+  const sharedPair = getSharedPair(currentStall.id, activeSectionKey);
+
+  const pairedStall = sharedPair
+    ? (() => {
+        const paired = sharedPair.a.id === currentStall.id && sharedPair.a.section === activeSectionKey
+          ? sharedPair.b
+          : sharedPair.a;
+        return {
+          stall: sectionsData[paired.section]?.stalls.find(s => s.id === paired.id) || null,
+          section: paired.section,
+          sectionName: SECTIONS[paired.section]?.name || paired.section
+        };
+      })()
+    : null;
+
+  const activeDetailsStall = dualStallSelected
+    ? sectionsData[dualStallSelected.section]?.stalls.find(s => s.id === dualStallSelected.id) || currentStall
+    : currentStall;
+
+  const activeDetailsSectionName = dualStallSelected
+    ? SECTIONS[dualStallSelected.section]?.name || activeSectionKey
+    : activeSection.name;
+
   return (
     <div className="relative w-full bg-black overflow-hidden font-sans select-none" style={{ height: 'calc(var(--vh, 1vh) * 100)' }}>
       {/* 360 ThreeJS Viewer Mount */}
@@ -1441,28 +1548,61 @@ export default function MarketTour360() {
             }}
             className="bg-white/95 backdrop-blur-md border border-black/10 rounded-full px-5 py-2 text-xs font-black text-slate-800 shadow-xl hover:bg-white transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-1.5"
           >
-            <span>{currentStall.name} ({stallIndex + 1}/{activeSection.stalls.length})</span>
+            <span>
+              {sharedPair 
+                ? `${currentStall.name} / ${pairedStall.sectionName} - Stall #${pairedStall.stall?.id}`
+                : `${currentStall.name} (${stallIndex + 1}/${activeSection.stalls.length})`
+              }
+            </span>
             <ChevronDown size={12} className="text-[#1a5c2a]" />
           </button>
 
           {stallDropdownOpen && (
             <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 bg-white/95 backdrop-blur-md border border-black/10 rounded-2xl p-1.5 shadow-2xl z-50 flex flex-col gap-0.5 min-w-[200px] max-h-[220px] overflow-y-auto">
-              {activeSection.stalls.map((st, idx) => (
-                <button
-                  key={st.id}
-                  onClick={() => {
-                    setStallIndex(idx)
-                    triggerSceneTransition(getStallImagePath(st.id, activeSectionKey))
-                    setStallDropdownOpen(false)
-                  }}
-                  className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${idx === stallIndex
-                    ? 'bg-[#1a5c2a] text-white'
-                    : 'text-slate-700 hover:bg-black/5'
+              {sharedPair ? (
+                <>
+                  <button
+                    onClick={() => {
+                      setDualStallSelected(null)
+                      setStallDropdownOpen(false)
+                    }}
+                    className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${
+                      dualStallSelected === null ? 'bg-[#1a5c2a] text-white' : 'text-slate-700 hover:bg-black/5'
                     }`}
-                >
-                  {st.name}
-                </button>
-              ))}
+                  >
+                    {activeSection.name} — {currentStall.name}
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDualStallSelected({ section: pairedStall.section, id: pairedStall.stall?.id })
+                      setStallDropdownOpen(false)
+                    }}
+                    className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${
+                      dualStallSelected?.id === pairedStall.stall?.id && dualStallSelected?.section === pairedStall.section
+                        ? 'bg-[#1a5c2a] text-white' : 'text-slate-700 hover:bg-black/5'
+                    }`}
+                  >
+                    {pairedStall.sectionName} — Stall #{pairedStall.stall?.id}
+                  </button>
+                </>
+              ) : (
+                activeSection.stalls.map((st, idx) => (
+                  <button
+                    key={st.id}
+                    onClick={() => {
+                      setStallIndex(idx)
+                      triggerSceneTransition(getStallImagePath(st.id, activeSectionKey))
+                      setStallDropdownOpen(false)
+                    }}
+                    className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${idx === stallIndex
+                      ? 'bg-[#1a5c2a] text-white'
+                      : 'text-slate-700 hover:bg-black/5'
+                      }`}
+                  >
+                    {st.name}
+                  </button>
+                ))
+              )}
             </div>
           )}
         </div>
@@ -1532,7 +1672,7 @@ export default function MarketTour360() {
       </div>
 
       {/* STALL DETAILS DRAWER (Bottom Panel) */}
-      {selectedStall && uiVisible && !detailsCollapsed && (
+      {activeDetailsStall && uiVisible && !detailsCollapsed && (
         <div className="absolute bottom-16 md:bottom-0 left-0 right-0 z-20 px-4 pb-4">
           <div className="max-w-2xl mx-auto relative">
             <div className="max-w-2xl mx-auto bg-white/95 backdrop-blur-md rounded-3xl p-5 border border-black/10 shadow-2xl flex flex-col md:flex-row gap-5 relative overflow-hidden">
@@ -1545,21 +1685,21 @@ export default function MarketTour360() {
                 <ChevronDown size={16} />
               </button>
               {/* Background Ambient Glow */}
-              <div className={`absolute -right-32 -bottom-32 w-64 h-64 rounded-full bg-gradient-to-br ${activeSection.bgTheme} blur-3xl opacity-40 pointer-events-none`} />
+              <div className={`absolute -right-32 -bottom-32 w-64 h-64 rounded-full bg-gradient-to-br ${SECTIONS[dualStallSelected?.section || activeSectionKey]?.bgTheme} blur-3xl opacity-40 pointer-events-none`} />
 
               {/* Main Info */}
               <div className="flex-1 min-w-0 z-10">
                 <div className="flex items-center gap-2 mb-2 flex-wrap">
                   <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wider bg-black/10 text-slate-800">
-                    {selectedStall.zone}
+                    {activeDetailsStall.zone}
                   </span>
                 </div>
                 <h3 className="text-lg font-black text-slate-900 truncate leading-tight">
-                  {selectedStall.name}
+                  {activeDetailsStall.name}
                 </h3>
                 <p className="text-xs text-slate-600 mt-1 flex flex-col gap-0.5">
-                  <span>Category: {activeSection.name}</span>
-                  <span className="text-[10px] text-slate-500 font-medium">Utilities: {selectedStall.utilities}</span>
+                  <span>Category: {activeDetailsSectionName}</span>
+                  <span className="text-[10px] text-slate-500 font-medium">Utilities: {activeDetailsStall.utilities}</span>
                 </p>
 
                 {/* Stats Grid */}
@@ -1568,29 +1708,29 @@ export default function MarketTour360() {
                     <Zap size={15} className="text-[#1a5c2a] shrink-0" />
                     <div>
                       <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Electricity</p>
-                      <p className="text-xs font-bold text-slate-800">{selectedStall.electricitySetup}</p>
+                      <p className="text-xs font-bold text-slate-800">{activeDetailsStall.electricitySetup}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
                     <MapPin size={15} className="text-[#1a5c2a] shrink-0" />
                     <div>
                       <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Water Access</p>
-                      <p className="text-xs font-bold text-slate-800">{selectedStall.waterAccess}</p>
+                      <p className="text-xs font-bold text-slate-800">{activeDetailsStall.waterAccess}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
                     <User size={15} className="text-[#1a5c2a] shrink-0" />
                     <div>
                       <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contractor</p>
-                      <p className="text-xs font-bold text-slate-800">{selectedStall.contractorName || 'None'}</p>
+                      <p className="text-xs font-bold text-slate-800">{activeDetailsStall.contractorName || 'None'}</p>
                     </div>
                   </div>
-                  {selectedStall.contractorName && selectedStall.contractorName !== 'None' && (
+                  {activeDetailsStall.contractorName && activeDetailsStall.contractorName !== 'None' && (
                     <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
                       <Phone size={15} className="text-[#1a5c2a] shrink-0" />
                       <div>
                         <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contact</p>
-                        <p className="text-xs font-bold text-slate-800">{selectedStall.contractorContact || 'N/A'}</p>
+                        <p className="text-xs font-bold text-slate-800">{activeDetailsStall.contractorContact || 'N/A'}</p>
                       </div>
                     </div>
                   )}
@@ -1601,7 +1741,7 @@ export default function MarketTour360() {
               <div className="w-full md:w-52 shrink-0 flex flex-col justify-center border-t md:border-t-0 md:border-l border-black/10 pt-4 md:pt-0 md:pl-5 z-10">
                 <div>
                   <p className="text-xl sm:text-2xl font-black text-[#e07b00] leading-none whitespace-nowrap">
-                    {selectedStall.price}
+                    {activeDetailsStall.price}
                   </p>
                   <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-1">per month (negotiable)</p>
                 </div>
