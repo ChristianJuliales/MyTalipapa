@@ -1647,12 +1647,12 @@ export default function MarketTour360() {
                 <ChevronDown size={16} />
               </button>
 
-              <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide md:divide-x divide-black/10">
+              <div className="flex flex-col md:flex-row md:divide-x divide-y md:divide-y-0 divide-black/10">
                 {[
                   { stall: selectedStall, sectionName: activeSection.name, bgTheme: activeSection.bgTheme },
                   ...(sharedPair && pairedStall?.stall ? [{ stall: pairedStall.stall, sectionName: pairedStall.sectionName, bgTheme: SECTIONS[pairedStall.section]?.bgTheme }] : [])
                 ].map((detail, index) => (
-                  <div key={detail.stall.id + index} className="min-w-full md:min-w-[50%] md:flex-1 shrink-0 snap-center p-5 flex flex-col md:flex-row gap-5 relative overflow-hidden">
+                  <div key={detail.stall.id + index} className="flex-1 p-5 flex flex-col sm:flex-row gap-5 relative overflow-hidden">
                     {/* Background Ambient Glow */}
                     <div className={`absolute -right-32 -bottom-32 w-64 h-64 rounded-full bg-gradient-to-br ${detail.bgTheme || 'from-slate-200 to-slate-300'} blur-3xl opacity-40 pointer-events-none`} />
 
@@ -1662,11 +1662,6 @@ export default function MarketTour360() {
                         <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wider bg-black/10 text-slate-800">
                           {detail.stall.zone}
                         </span>
-                        {index === 0 && sharedPair && pairedStall?.stall && (
-                          <span className="md:hidden ml-auto text-[10px] text-slate-400 font-bold uppercase tracking-wider animate-pulse flex items-center gap-1 bg-black/5 px-2 py-0.5 rounded-lg">
-                            Swipe for paired stall &rarr;
-                          </span>
-                        )}
                       </div>
                       <h3 className="text-lg font-black text-slate-900 truncate leading-tight">
                         {detail.stall.name}
@@ -1712,7 +1707,7 @@ export default function MarketTour360() {
                     </div>
 
                     {/* Price Details Block */}
-                    <div className="w-full md:w-32 shrink-0 flex flex-col justify-center border-t md:border-t-0 border-black/10 pt-4 md:pt-0 z-10">
+                    <div className="w-full sm:w-32 shrink-0 flex flex-col justify-center sm:border-l border-t sm:border-t-0 border-black/10 pt-4 sm:pt-0 sm:pl-5 z-10">
                       <div>
                         <p className="text-xl sm:text-2xl font-black text-[#e07b00] leading-none whitespace-nowrap">
                           {detail.stall.price}
