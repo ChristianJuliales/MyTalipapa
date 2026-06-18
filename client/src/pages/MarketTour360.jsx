@@ -1647,12 +1647,22 @@ export default function MarketTour360() {
                 <ChevronDown size={16} />
               </button>
 
-              <div className="flex flex-col md:flex-row md:divide-x divide-y md:divide-y-0 divide-black/10">
-                {[
+              {(() => {
+                const detailsList = [
                   { stall: selectedStall, sectionName: activeSection.name, bgTheme: activeSection.bgTheme },
                   ...(sharedPair && pairedStall?.stall ? [{ stall: pairedStall.stall, sectionName: pairedStall.sectionName, bgTheme: SECTIONS[pairedStall.section]?.bgTheme }] : [])
-                ].map((detail, index) => (
-                  <div key={detail.stall.id + index} className="flex-1 p-5 flex flex-col sm:flex-row gap-5 relative overflow-hidden">
+                ];
+                const isSingle = detailsList.length === 1;
+
+                return (
+                  <div className={isSingle ? "" : "flex overflow-x-auto snap-x snap-mandatory scrollbar-hide md:divide-x divide-black/10"}>
+                    {detailsList.map((detail, index) => (
+                      <div 
+                        key={detail.stall.id + index} 
+                        className={isSingle 
+                          ? "p-5 flex flex-col sm:flex-row gap-5 relative overflow-hidden" 
+                          : "w-[85vw] sm:w-[400px] md:w-[50%] flex-none shrink-0 snap-center p-5 flex flex-col sm:flex-row gap-5 relative overflow-hidden"}
+                      >
                     {/* Background Ambient Glow */}
                     <div className={`absolute -right-32 -bottom-32 w-64 h-64 rounded-full bg-gradient-to-br ${detail.bgTheme || 'from-slate-200 to-slate-300'} blur-3xl opacity-40 pointer-events-none`} />
 
@@ -1717,7 +1727,9 @@ export default function MarketTour360() {
                     </div>
                   </div>
                 ))}
-              </div>
+                  </div>
+                );
+              })()}
             </div>
           </div>
         </div>
