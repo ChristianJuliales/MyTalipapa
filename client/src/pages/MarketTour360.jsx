@@ -1635,9 +1635,9 @@ export default function MarketTour360() {
 
       {/* STALL DETAILS DRAWER (Bottom Panel) */}
       {selectedStall && uiVisible && !detailsCollapsed && (
-        <div className="absolute bottom-16 md:bottom-0 left-0 right-0 z-20 px-4 pb-4">
-          <div className="max-w-4xl mx-auto relative">
-            <div className="max-w-4xl mx-auto bg-white/95 backdrop-blur-md rounded-3xl p-5 border border-black/10 shadow-2xl relative overflow-hidden flex flex-col md:flex-row gap-5 divide-y md:divide-y-0 md:divide-x divide-black/10">
+        <div className="absolute bottom-16 md:bottom-0 left-0 right-0 z-20 px-4 pb-4 pointer-events-none">
+          <div className="max-w-4xl mx-auto relative pointer-events-auto">
+            <div className="bg-white/95 backdrop-blur-md rounded-3xl border border-black/10 shadow-2xl relative overflow-hidden">
               {/* Collapse Toggle */}
               <button
                 onClick={() => setDetailsCollapsed(true)}
@@ -1647,75 +1647,82 @@ export default function MarketTour360() {
                 <ChevronDown size={16} />
               </button>
 
-              {[
-                { stall: selectedStall, sectionName: activeSection.name, bgTheme: activeSection.bgTheme },
-                ...(sharedPair && pairedStall?.stall ? [{ stall: pairedStall.stall, sectionName: pairedStall.sectionName, bgTheme: SECTIONS[pairedStall.section]?.bgTheme }] : [])
-              ].map((detail, index) => (
-                <div key={detail.stall.id + index} className="flex-1 flex flex-col md:flex-row gap-5 relative overflow-hidden pt-5 md:pt-0 pl-0 md:pl-5 first:pt-0 first:pl-0">
-                  {/* Background Ambient Glow */}
-                  <div className={`absolute -right-32 -bottom-32 w-64 h-64 rounded-full bg-gradient-to-br ${detail.bgTheme || 'from-slate-200 to-slate-300'} blur-3xl opacity-40 pointer-events-none`} />
+              <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide md:divide-x divide-black/10">
+                {[
+                  { stall: selectedStall, sectionName: activeSection.name, bgTheme: activeSection.bgTheme },
+                  ...(sharedPair && pairedStall?.stall ? [{ stall: pairedStall.stall, sectionName: pairedStall.sectionName, bgTheme: SECTIONS[pairedStall.section]?.bgTheme }] : [])
+                ].map((detail, index) => (
+                  <div key={detail.stall.id + index} className="min-w-full md:min-w-[50%] md:flex-1 shrink-0 snap-center p-5 flex flex-col md:flex-row gap-5 relative overflow-hidden">
+                    {/* Background Ambient Glow */}
+                    <div className={`absolute -right-32 -bottom-32 w-64 h-64 rounded-full bg-gradient-to-br ${detail.bgTheme || 'from-slate-200 to-slate-300'} blur-3xl opacity-40 pointer-events-none`} />
 
-                  {/* Main Info */}
-                  <div className="flex-1 min-w-0 z-10">
-                    <div className="flex items-center gap-2 mb-2 flex-wrap">
-                      <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wider bg-black/10 text-slate-800">
-                        {detail.stall.zone}
-                      </span>
-                    </div>
-                    <h3 className="text-lg font-black text-slate-900 truncate leading-tight">
-                      {detail.stall.name}
-                    </h3>
-                    <p className="text-xs text-slate-600 mt-1 flex flex-col gap-0.5">
-                      <span>Category: {detail.sectionName}</span>
-                      <span className="text-[10px] text-slate-500 font-medium">Utilities: {detail.stall.utilities}</span>
-                    </p>
+                    {/* Main Info */}
+                    <div className="flex-1 min-w-0 z-10">
+                      <div className="flex items-center gap-2 mb-2 flex-wrap">
+                        <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wider bg-black/10 text-slate-800">
+                          {detail.stall.zone}
+                        </span>
+                        {index === 0 && sharedPair && pairedStall?.stall && (
+                          <span className="md:hidden ml-auto text-[10px] text-slate-400 font-bold uppercase tracking-wider animate-pulse flex items-center gap-1 bg-black/5 px-2 py-0.5 rounded-lg">
+                            Swipe for paired stall &rarr;
+                          </span>
+                        )}
+                      </div>
+                      <h3 className="text-lg font-black text-slate-900 truncate leading-tight">
+                        {detail.stall.name}
+                      </h3>
+                      <p className="text-xs text-slate-600 mt-1 flex flex-col gap-0.5">
+                        <span>Category: {detail.sectionName}</span>
+                        <span className="text-[10px] text-slate-500 font-medium">Utilities: {detail.stall.utilities}</span>
+                      </p>
 
-                    {/* Stats Grid */}
-                    <div className="grid grid-cols-2 gap-3 mt-4">
-                      <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                        <Zap size={15} className="text-[#1a5c2a] shrink-0" />
-                        <div>
-                          <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Electricity</p>
-                          <p className="text-xs font-bold text-slate-800">{detail.stall.electricitySetup}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                        <MapPin size={15} className="text-[#1a5c2a] shrink-0" />
-                        <div>
-                          <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Water Access</p>
-                          <p className="text-xs font-bold text-slate-800">{detail.stall.waterAccess}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                        <User size={15} className="text-[#1a5c2a] shrink-0" />
-                        <div>
-                          <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contractor</p>
-                          <p className="text-xs font-bold text-slate-800">{detail.stall.contractorName || 'None'}</p>
-                        </div>
-                      </div>
-                      {detail.stall.contractorName && detail.stall.contractorName !== 'None' && (
+                      {/* Stats Grid */}
+                      <div className="grid grid-cols-2 gap-3 mt-4">
                         <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                          <Phone size={15} className="text-[#1a5c2a] shrink-0" />
+                          <Zap size={15} className="text-[#1a5c2a] shrink-0" />
                           <div>
-                            <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contact</p>
-                            <p className="text-xs font-bold text-slate-800">{detail.stall.contractorContact || 'N/A'}</p>
+                            <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Electricity</p>
+                            <p className="text-xs font-bold text-slate-800">{detail.stall.electricitySetup}</p>
                           </div>
                         </div>
-                      )}
+                        <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
+                          <MapPin size={15} className="text-[#1a5c2a] shrink-0" />
+                          <div>
+                            <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Water Access</p>
+                            <p className="text-xs font-bold text-slate-800">{detail.stall.waterAccess}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
+                          <User size={15} className="text-[#1a5c2a] shrink-0" />
+                          <div>
+                            <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contractor</p>
+                            <p className="text-xs font-bold text-slate-800">{detail.stall.contractorName || 'None'}</p>
+                          </div>
+                        </div>
+                        {detail.stall.contractorName && detail.stall.contractorName !== 'None' && (
+                          <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
+                            <Phone size={15} className="text-[#1a5c2a] shrink-0" />
+                            <div>
+                              <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contact</p>
+                              <p className="text-xs font-bold text-slate-800">{detail.stall.contractorContact || 'N/A'}</p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Price Details Block */}
-                  <div className="w-full md:w-32 shrink-0 flex flex-col justify-center border-t md:border-t-0 border-black/10 pt-4 md:pt-0 z-10">
-                    <div>
-                      <p className="text-xl sm:text-2xl font-black text-[#e07b00] leading-none whitespace-nowrap">
-                        {detail.stall.price}
-                      </p>
-                      <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-1">per month (negotiable)</p>
+                    {/* Price Details Block */}
+                    <div className="w-full md:w-32 shrink-0 flex flex-col justify-center border-t md:border-t-0 border-black/10 pt-4 md:pt-0 z-10">
+                      <div>
+                        <p className="text-xl sm:text-2xl font-black text-[#e07b00] leading-none whitespace-nowrap">
+                          {detail.stall.price}
+                        </p>
+                        <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-1">per month (negotiable)</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
