@@ -163,49 +163,49 @@ const generateStalls = (category, numbers) => {
 
 const SHARED_HALLWAY_PAIRS = [
   // Zone E/F hallway — meat left side, veggies/meat right side
-  { a: { section: 'meat', id: '17' },  b: { section: 'veggies', id: '5'  } },
-  { a: { section: 'meat', id: '18' },  b: { section: 'veggies', id: '6'  } },
-  { a: { section: 'meat', id: '19' },  b: { section: 'veggies', id: '7'  } },
-  { a: { section: 'meat', id: '23' },  b: { section: 'veggies', id: '11' } },
-  { a: { section: 'meat', id: '24' },  b: { section: 'veggies', id: '12' } },
-  { a: { section: 'meat', id: '13(u)'},b: { section: 'meat',    id: '1(u2)'} },
-  { a: { section: 'meat', id: '14' },  b: { section: 'meat',    id: '2(u2)'} },
-  { a: { section: 'meat', id: '15' },  b: { section: 'meat',    id: '3(u2)'} },
-  { a: { section: 'meat', id: '16' },  b: { section: 'meat',    id: '4(u2)'} },
+  { a: { section: 'meat', id: '17' }, b: { section: 'veggies', id: '5' } },
+  { a: { section: 'meat', id: '18' }, b: { section: 'veggies', id: '6' } },
+  { a: { section: 'meat', id: '19' }, b: { section: 'veggies', id: '7' } },
+  { a: { section: 'meat', id: '23' }, b: { section: 'veggies', id: '11' } },
+  { a: { section: 'meat', id: '24' }, b: { section: 'veggies', id: '12' } },
+  { a: { section: 'meat', id: '13(u)' }, b: { section: 'meat', id: '1(u2)' } },
+  { a: { section: 'meat', id: '14' }, b: { section: 'meat', id: '2(u2)' } },
+  { a: { section: 'meat', id: '15' }, b: { section: 'meat', id: '3(u2)' } },
+  { a: { section: 'meat', id: '16' }, b: { section: 'meat', id: '4(u2)' } },
   // Zone A hallway — fish/meat shared
-  { a: { section: 'meat', id: '12' },  b: { section: 'fish',    id: '22' } },
-  { a: { section: 'meat', id: '13' },  b: { section: 'fish',    id: '23' } },
-  { a: { section: 'fish', id: '11' },  b: { section: 'fish',    id: '21' } },
-  { a: { section: 'fish', id: '14' },  b: { section: 'fish',    id: '24' } },
-  { a: { section: 'fish', id: '15' },  b: { section: 'fish',    id: '25' } },
-  { a: { section: 'fish', id: '16' },  b: { section: 'fish',    id: '26' } },
-  { a: { section: 'fish', id: '17' },  b: { section: 'fish',    id: '27' } },
-  { a: { section: 'fish', id: '18' },  b: { section: 'fish',    id: '28' } },
-  { a: { section: 'fish', id: '19' },  b: { section: 'fish',    id: '29' } },
-  { a: { section: 'fish', id: '20' },  b: { section: 'fish',    id: '30' } },
+  { a: { section: 'meat', id: '12' }, b: { section: 'fish', id: '22' } },
+  { a: { section: 'meat', id: '13' }, b: { section: 'fish', id: '23' } },
+  { a: { section: 'fish', id: '11' }, b: { section: 'fish', id: '21' } },
+  { a: { section: 'fish', id: '14' }, b: { section: 'fish', id: '24' } },
+  { a: { section: 'fish', id: '15' }, b: { section: 'fish', id: '25' } },
+  { a: { section: 'fish', id: '16' }, b: { section: 'fish', id: '26' } },
+  { a: { section: 'fish', id: '17' }, b: { section: 'fish', id: '27' } },
+  { a: { section: 'fish', id: '18' }, b: { section: 'fish', id: '28' } },
+  { a: { section: 'fish', id: '19' }, b: { section: 'fish', id: '29' } },
+  { a: { section: 'fish', id: '20' }, b: { section: 'fish', id: '30' } },
   // Zone C hallway — fish opposite sides
-  { a: { section: 'fish', id: '31' },  b: { section: 'fish',    id: '41' } },
-  { a: { section: 'fish', id: '32' },  b: { section: 'fish',    id: '42' } },
-  { a: { section: 'fish', id: '33' },  b: { section: 'fish',    id: '43' } },
-  { a: { section: 'fish', id: '34' },  b: { section: 'fish',    id: '44' } },
-  { a: { section: 'fish', id: '35' },  b: { section: 'fish',    id: '45' } },
-  { a: { section: 'fish', id: '36' },  b: { section: 'fish',    id: '46' } },
-  { a: { section: 'fish', id: '37' },  b: { section: 'fish',    id: '47' } },
-  { a: { section: 'fish', id: '38' },  b: { section: 'fish',    id: '48' } },
-  { a: { section: 'fish', id: '39' },  b: { section: 'fish',    id: '49' } },
-  { a: { section: 'fish', id: '40' },  b: { section: 'fish',    id: '50' } },
+  { a: { section: 'fish', id: '31' }, b: { section: 'fish', id: '41' } },
+  { a: { section: 'fish', id: '32' }, b: { section: 'fish', id: '42' } },
+  { a: { section: 'fish', id: '33' }, b: { section: 'fish', id: '43' } },
+  { a: { section: 'fish', id: '34' }, b: { section: 'fish', id: '44' } },
+  { a: { section: 'fish', id: '35' }, b: { section: 'fish', id: '45' } },
+  { a: { section: 'fish', id: '36' }, b: { section: 'fish', id: '46' } },
+  { a: { section: 'fish', id: '37' }, b: { section: 'fish', id: '47' } },
+  { a: { section: 'fish', id: '38' }, b: { section: 'fish', id: '48' } },
+  { a: { section: 'fish', id: '39' }, b: { section: 'fish', id: '49' } },
+  { a: { section: 'fish', id: '40' }, b: { section: 'fish', id: '50' } },
   // Zone C hallway — meat vs fish
-  { a: { section: 'meat', id: '51' },  b: { section: 'fish',    id: '61' } },
-  { a: { section: 'meat', id: '52' },  b: { section: 'fish',    id: '62' } },
-  { a: { section: 'meat', id: '53' },  b: { section: 'fish',    id: '63' } },
-  { a: { section: 'meat', id: '54' },  b: { section: 'fish',    id: '64' } },
-  { a: { section: 'meat', id: '55' },  b: { section: 'fish',    id: '65' } },
-  { a: { section: 'meat', id: '56' },  b: { section: 'fish',    id: '66' } },
+  { a: { section: 'meat', id: '51' }, b: { section: 'fish', id: '61' } },
+  { a: { section: 'meat', id: '52' }, b: { section: 'fish', id: '62' } },
+  { a: { section: 'meat', id: '53' }, b: { section: 'fish', id: '63' } },
+  { a: { section: 'meat', id: '54' }, b: { section: 'fish', id: '64' } },
+  { a: { section: 'meat', id: '55' }, b: { section: 'fish', id: '65' } },
+  { a: { section: 'meat', id: '56' }, b: { section: 'fish', id: '66' } },
   // Zone D hallway — fish opposite sides
-  { a: { section: 'fish', id: '57' },  b: { section: 'fish',    id: '67' } },
-  { a: { section: 'fish', id: '58' },  b: { section: 'fish',    id: '68' } },
-  { a: { section: 'fish', id: '59' },  b: { section: 'fish',    id: '69' } },
-  { a: { section: 'fish', id: '60' },  b: { section: 'fish',    id: '70' } },
+  { a: { section: 'fish', id: '57' }, b: { section: 'fish', id: '67' } },
+  { a: { section: 'fish', id: '58' }, b: { section: 'fish', id: '68' } },
+  { a: { section: 'fish', id: '59' }, b: { section: 'fish', id: '69' } },
+  { a: { section: 'fish', id: '60' }, b: { section: 'fish', id: '70' } },
   // Zone G hallway — veggies opposite sides
   { a: { section: 'veggies', id: '25' }, b: { section: 'veggies', id: '37' } },
   { a: { section: 'veggies', id: '26' }, b: { section: 'veggies', id: '38' } },
@@ -1029,7 +1029,7 @@ export default function MarketTour360() {
           } else if (hit.object.userData.type === 'go_forward') {
             const target = hit.object.userData.targetStallInfo;
             if (target) {
-              if ((stateRef.current.currentStall.id === '1(u)' && target.stall.id === '13(u)') || (stateRef.current.currentStall.id === '1' && target.stall.id === '13')) {
+              if (stateRef.current.currentStall.id === '1(u)' && target.stall.id === '13(u)') {
                 dynamicLabel = `Go Left to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else if (stateRef.current.currentStall.id === '24' && target.stall.id === '12(u)') {
                 dynamicLabel = `Go Left to ${target.stall.name || 'Stall ' + target.stall.id}`;
@@ -1037,7 +1037,7 @@ export default function MarketTour360() {
                 dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else if (stateRef.current.currentStall.id === '12(u)' && target.stall.id === '24') {
                 dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
-              } else if ((stateRef.current.currentStall.id === '13(u)' && target.stall.id === '1(u)') || (stateRef.current.currentStall.id === '13' && target.stall.id === '1')) {
+              } else if (stateRef.current.currentStall.id === '13(u)' && target.stall.id === '1(u)') {
                 dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else {
                 dynamicLabel = `Forward to ${target.stall.name || 'Stall ' + target.stall.id}`;
@@ -1103,7 +1103,7 @@ export default function MarketTour360() {
 
         const needs180Offset = isZoneEMeat || isZoneAMeat || isZoneFMeat || isZoneAFish || isFishMeatZoneA || isFishMeatZoneC || isVeggiesMeatHallway || isVeggiesOpposite;
 
-        if ((currentStallId === '1(u)' || currentStallId === '1') && activeSection === 'meat') {
+        if (currentStallId === '1(u)' && activeSection === 'meat') {
           northOffset = -90; // Calibrate left turn to point to Stall #13
         } else if (needs180Offset) {
           northOffset = 180; // Correct cone to align with the actual camera orientation for the entire row
@@ -1135,7 +1135,7 @@ export default function MarketTour360() {
 
               // Rotate the arrow to point in the direction of the camera
               let arrowRotationOffset = -Math.PI / 2;
-              if ((currentStall.id === '1(u)' && nearestStallInfo.stall.id === '13(u)') || (currentStall.id === '1' && nearestStallInfo.stall.id === '13')) {
+              if (currentStall.id === '1(u)' && nearestStallInfo.stall.id === '13(u)') {
                 arrowRotationOffset = 0; // Point left
               } else if (currentStall.id === '24' && nearestStallInfo.stall.id === '12(u)') {
                 arrowRotationOffset = 0; // Point left
@@ -1143,7 +1143,7 @@ export default function MarketTour360() {
                 arrowRotationOffset = Math.PI; // Point right
               } else if (currentStall.id === '12(u)' && nearestStallInfo.stall.id === '24') {
                 arrowRotationOffset = Math.PI; // Point right
-              } else if ((currentStall.id === '13(u)' && nearestStallInfo.stall.id === '1(u)') || (currentStall.id === '13' && nearestStallInfo.stall.id === '1')) {
+              } else if (currentStall.id === '13(u)' && nearestStallInfo.stall.id === '1(u)') {
                 arrowRotationOffset = Math.PI; // Point right
               }
               forwardMesh.rotation.set(-Math.PI / 2, 0, -theta + arrowRotationOffset);
@@ -1303,15 +1303,15 @@ export default function MarketTour360() {
 
   const pairedStall = sharedPair
     ? (() => {
-        const paired = sharedPair.a.id === currentStall.id && sharedPair.a.section === activeSectionKey
-          ? sharedPair.b
-          : sharedPair.a;
-        return {
-          stall: sectionsData[paired.section]?.stalls.find(s => s.id === paired.id) || null,
-          section: paired.section,
-          sectionName: SECTIONS[paired.section]?.name || paired.section
-        };
-      })()
+      const paired = sharedPair.a.id === currentStall.id && sharedPair.a.section === activeSectionKey
+        ? sharedPair.b
+        : sharedPair.a;
+      return {
+        stall: sectionsData[paired.section]?.stalls.find(s => s.id === paired.id) || null,
+        section: paired.section,
+        sectionName: SECTIONS[paired.section]?.name || paired.section
+      };
+    })()
     : null;
 
   return (
@@ -1478,9 +1478,8 @@ export default function MarketTour360() {
           className={`absolute transition-all duration-500 ease-in-out z-30 overflow-hidden bg-slate-200 shadow-2xl 
           ${isMapExpanded
               ? 'bottom-0 left-0 w-full h-1/2 rounded-t-3xl border-t-4 border-black/20 opacity-100 pointer-events-auto'
-              : `bottom-24 left-3 sm:bottom-6 sm:left-6 w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 rounded-2xl border border-black/20 ${
-                  !detailsCollapsed ? 'opacity-0 pointer-events-none sm:opacity-100 sm:pointer-events-auto' : 'opacity-100 pointer-events-auto'
-                }`
+              : `bottom-24 left-3 sm:bottom-6 sm:left-6 w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 rounded-2xl border border-black/20 ${!detailsCollapsed ? 'opacity-0 pointer-events-none sm:opacity-100 sm:pointer-events-auto' : 'opacity-100 pointer-events-auto'
+              }`
             }`}
         >
           {/* Expand/Collapse Toggle Button */}
@@ -1539,7 +1538,7 @@ export default function MarketTour360() {
             className="bg-white/95 backdrop-blur-md border border-black/10 rounded-full px-5 py-2 text-xs font-black text-slate-800 shadow-xl hover:bg-white transition-all active:scale-95 cursor-pointer flex items-center justify-center gap-1.5"
           >
             <span>
-              {sharedPair 
+              {sharedPair
                 ? `Shared Location: ${currentStall.name} & ${pairedStall.sectionName} Stall #${pairedStall.stall?.id}`
                 : `${currentStall.name} (${stallIndex + 1}/${activeSection.stalls.length})`
               }
@@ -1558,10 +1557,9 @@ export default function MarketTour360() {
                     triggerSceneTransition(getStallImagePath(st.id, activeSectionKey))
                     setStallDropdownOpen(false)
                   }}
-                  className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${
-                    idx === stallIndex
-                    ? 'bg-[#1a5c2a] text-white'
-                    : 'text-slate-700 hover:bg-black/5'
+                  className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${idx === stallIndex
+                      ? 'bg-[#1a5c2a] text-white'
+                      : 'text-slate-700 hover:bg-black/5'
                     }`}
                 >
                   {st.name}
@@ -1659,76 +1657,76 @@ export default function MarketTour360() {
                 return (
                   <div className={isSingle ? "" : "flex overflow-x-auto snap-x snap-mandatory scrollbar-hide md:divide-x divide-black/10"}>
                     {detailsList.map((detail, index) => (
-                      <div 
-                        key={detail.stall.id + index} 
-                        className={isSingle 
-                          ? "p-5 flex flex-col sm:flex-row gap-5 relative overflow-hidden" 
+                      <div
+                        key={detail.stall.id + index}
+                        className={isSingle
+                          ? "p-5 flex flex-col sm:flex-row gap-5 relative overflow-hidden"
                           : "w-[85vw] sm:w-[400px] md:w-[50%] flex-none shrink-0 snap-center p-5 flex flex-col sm:flex-row gap-5 relative overflow-hidden"}
                       >
-                    {/* Background Ambient Glow */}
-                    <div className={`absolute -right-32 -bottom-32 w-64 h-64 rounded-full bg-gradient-to-br ${detail.bgTheme || 'from-slate-200 to-slate-300'} blur-3xl opacity-40 pointer-events-none`} />
+                        {/* Background Ambient Glow */}
+                        <div className={`absolute -right-32 -bottom-32 w-64 h-64 rounded-full bg-gradient-to-br ${detail.bgTheme || 'from-slate-200 to-slate-300'} blur-3xl opacity-40 pointer-events-none`} />
 
-                    {/* Main Info */}
-                    <div className="flex-1 min-w-0 z-10">
-                      <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wider bg-black/10 text-slate-800">
-                          {detail.stall.zone}
-                        </span>
-                      </div>
-                      <h3 className="text-lg font-black text-slate-900 truncate leading-tight">
-                        {detail.stall.name}
-                      </h3>
-                      <p className="text-xs text-slate-600 mt-1 flex flex-col gap-0.5">
-                        <span>Category: {detail.sectionName}</span>
-                        <span className="text-[10px] text-slate-500 font-medium">Utilities: {detail.stall.utilities}</span>
-                      </p>
+                        {/* Main Info */}
+                        <div className="flex-1 min-w-0 z-10">
+                          <div className="flex items-center gap-2 mb-2 flex-wrap">
+                            <span className="px-2.5 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-wider bg-black/10 text-slate-800">
+                              {detail.stall.zone}
+                            </span>
+                          </div>
+                          <h3 className="text-lg font-black text-slate-900 truncate leading-tight">
+                            {detail.stall.name}
+                          </h3>
+                          <p className="text-xs text-slate-600 mt-1 flex flex-col gap-0.5">
+                            <span>Category: {detail.sectionName}</span>
+                            <span className="text-[10px] text-slate-500 font-medium">Utilities: {detail.stall.utilities}</span>
+                          </p>
 
-                      {/* Stats Grid */}
-                      <div className="grid grid-cols-2 gap-3 mt-4">
-                        <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                          <Zap size={15} className="text-[#1a5c2a] shrink-0" />
-                          <div>
-                            <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Electricity</p>
-                            <p className="text-xs font-bold text-slate-800">{detail.stall.electricitySetup}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                          <MapPin size={15} className="text-[#1a5c2a] shrink-0" />
-                          <div>
-                            <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Water Access</p>
-                            <p className="text-xs font-bold text-slate-800">{detail.stall.waterAccess}</p>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                          <User size={15} className="text-[#1a5c2a] shrink-0" />
-                          <div>
-                            <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contractor</p>
-                            <p className="text-xs font-bold text-slate-800">{detail.stall.contractorName || 'None'}</p>
-                          </div>
-                        </div>
-                        {detail.stall.contractorName && detail.stall.contractorName !== 'None' && (
-                          <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
-                            <Phone size={15} className="text-[#1a5c2a] shrink-0" />
-                            <div>
-                              <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contact</p>
-                              <p className="text-xs font-bold text-slate-800">{detail.stall.contractorContact || 'N/A'}</p>
+                          {/* Stats Grid */}
+                          <div className="grid grid-cols-2 gap-3 mt-4">
+                            <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
+                              <Zap size={15} className="text-[#1a5c2a] shrink-0" />
+                              <div>
+                                <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Electricity</p>
+                                <p className="text-xs font-bold text-slate-800">{detail.stall.electricitySetup}</p>
+                              </div>
                             </div>
+                            <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
+                              <MapPin size={15} className="text-[#1a5c2a] shrink-0" />
+                              <div>
+                                <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Water Access</p>
+                                <p className="text-xs font-bold text-slate-800">{detail.stall.waterAccess}</p>
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
+                              <User size={15} className="text-[#1a5c2a] shrink-0" />
+                              <div>
+                                <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contractor</p>
+                                <p className="text-xs font-bold text-slate-800">{detail.stall.contractorName || 'None'}</p>
+                              </div>
+                            </div>
+                            {detail.stall.contractorName && detail.stall.contractorName !== 'None' && (
+                              <div className="flex items-center gap-2 bg-black/5 rounded-2xl p-3 border border-black/5 hover:bg-black/10 transition-all">
+                                <Phone size={15} className="text-[#1a5c2a] shrink-0" />
+                                <div>
+                                  <p className="text-[9px] text-slate-500 font-black uppercase tracking-wider">Contact</p>
+                                  <p className="text-xs font-bold text-slate-800">{detail.stall.contractorContact || 'N/A'}</p>
+                                </div>
+                              </div>
+                            )}
                           </div>
-                        )}
-                      </div>
-                    </div>
+                        </div>
 
-                    {/* Price Details Block */}
-                    <div className="w-full sm:w-32 shrink-0 flex flex-col justify-center sm:border-l border-t sm:border-t-0 border-black/10 pt-4 sm:pt-0 sm:pl-5 z-10">
-                      <div>
-                        <p className="text-xl sm:text-2xl font-black text-[#e07b00] leading-none whitespace-nowrap">
-                          {detail.stall.price}
-                        </p>
-                        <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-1">per month (negotiable)</p>
+                        {/* Price Details Block */}
+                        <div className="w-full sm:w-32 shrink-0 flex flex-col justify-center sm:border-l border-t sm:border-t-0 border-black/10 pt-4 sm:pt-0 sm:pl-5 z-10">
+                          <div>
+                            <p className="text-xl sm:text-2xl font-black text-[#e07b00] leading-none whitespace-nowrap">
+                              {detail.stall.price}
+                            </p>
+                            <p className="text-[9px] text-slate-500 font-black uppercase tracking-widest mt-1">per month (negotiable)</p>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    ))}
                   </div>
                 );
               })()}
