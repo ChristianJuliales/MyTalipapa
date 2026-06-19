@@ -1122,6 +1122,7 @@ export default function MarketTour360() {
         if (stateRef.current.lastCompassDeg !== compassDeg) {
           stateRef.current.lastCompassDeg = compassDeg;
           setCompassAngle(compassDeg)
+          console.log('[minimap] minimapDeg:', minimapDeg, 'minimapNorthOffset:', minimapNorthOffset, 'theta:', theta)
           setMinimapAngle(minimapDeg)
 
           // Find nearest stall in this direction
