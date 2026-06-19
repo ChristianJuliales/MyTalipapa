@@ -1133,7 +1133,7 @@ export default function MarketTour360() {
           const forwardMesh = hotspotMeshes.current.find(m => m.userData.type === 'go_forward');
           if (forwardMesh) {
             if (nearestStallInfo) {
-              forwardMesh.visible = true;
+              forwardMesh. visible = true;
               // Place arrow 250 units in front of the camera on the floor
               // theta=0 corresponds to looking at +X (1, 0, 0).
               const arrowX = Math.cos(theta) * 250;
