@@ -1135,6 +1135,7 @@ export default function MarketTour360() {
           if (currentStall && currentStall.id === '24' && nearestStallInfo && nearestStallInfo.sectionKey === 'fish' && nearestStallInfo.stall.id === '21') {
             nearestStallInfo = {
               ...nearestStallInfo,
+              index: 0,
               stall: { id: '11', name: 'Stall #11' }
             };
           }
