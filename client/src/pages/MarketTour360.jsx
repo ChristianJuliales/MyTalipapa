@@ -846,7 +846,13 @@ export default function MarketTour360() {
         const mapAngleRad = Math.atan2(dy, dx);
         const mapAngleDeg = (mapAngleRad * 180) / Math.PI;
         // Convert Map coordinate angle to Compass Angle
-        const targetCompassAngle = (mapAngleDeg + 450) % 360;
+        let targetCompassAngle = (mapAngleDeg + 450) % 360;
+
+        // User specifically wants the arrow to Stall 13 to appear ON the red counter (North view, 0 deg)
+        // instead of the physical East hallway (90 deg), so we fake the target angle to match the forward view.
+        if (currentStall.id === '1(u)' && stall.id === '13(u)') {
+          targetCompassAngle = 0;
+        }
 
         let angleDiff = Math.abs(targetCompassAngle - currentCompassAngle);
         if (angleDiff > 180) angleDiff = 360 - angleDiff;
