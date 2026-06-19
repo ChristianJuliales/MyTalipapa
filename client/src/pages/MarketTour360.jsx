@@ -460,6 +460,7 @@ export default function MarketTour360() {
   const spherical = useRef({ phi: Math.PI / 2, theta: 0 })
   const hotspotMeshes = useRef([])
   const [compassAngle, setCompassAngle] = useState(0)
+  const [minimapAngle, setMinimapAngle] = useState(0)
 
   // Sync details sheet when stall changes
   useEffect(() => {
@@ -1067,6 +1068,7 @@ export default function MarketTour360() {
         camera.lookAt(x, y, z)
 
         let northOffset = 0;
+        let minimapNorthOffset = 0;
         const currentStallId = stateRef.current.currentStall ? stateRef.current.currentStall.id : null;
         const activeSection = stateRef.current.activeSectionKey;
 
@@ -1105,18 +1107,22 @@ export default function MarketTour360() {
 
         if (currentStallId === '1(u)' && activeSection === 'meat') {
           northOffset = -90; // Calibrate left turn to point to Stall #13
+          minimapNorthOffset = 90;
         } else if (needs180Offset) {
           northOffset = 180; // Correct cone to align with the actual camera orientation for the entire row
+          minimapNorthOffset = 180;
         }
 
         // Sync compass rotation (0 deg = North)
-        const deg = Math.round((theta * 180) / Math.PI) + northOffset;
+        const deg = Math.round((-theta * 180) / Math.PI) + northOffset;
         const compassDeg = ((deg % 360) + 360) % 360; // ensure positive
+        const minimapDeg = ((Math.round((theta * 180) / Math.PI) + minimapNorthOffset) % 360 + 360) % 360;
 
         // Optimize: Only recalculate heavy math and React state if the degree actually changed
         if (stateRef.current.lastCompassDeg !== compassDeg) {
           stateRef.current.lastCompassDeg = compassDeg;
           setCompassAngle(compassDeg)
+          setMinimapAngle(minimapDeg)
 
           // Find nearest stall in this direction
           const currentStall = stateRef.current.currentStall;
@@ -1513,9 +1519,9 @@ export default function MarketTour360() {
 
                   {/* View Cone and Dot positioned dynamically */}
                   <g transform={`translate(${mapCoords.x}, ${mapCoords.y})`}>
-                    <path d="M0 0 L-100 -200 A200 200 0 0 1 100 -200 Z" fill="rgba(239, 68, 68, 0.4)" transform={`rotate(${compassAngle})`} />
+                    <path d="M0 0 L-100 -200 A200 200 0 0 1 100 -200 Z" fill="rgba(239, 68, 68, 0.4)" transform={`rotate(${minimapAngle})`} />
                     <circle r="30" fill="#ef4444" stroke="#ffffff" strokeWidth="8" />
-                    <g transform={`rotate(${compassAngle})`}>
+                    <g transform={`rotate(${minimapAngle})`}>
                       <path d="M0 -20 L15 15 L0 5 L-15 15 Z" fill="#ffffff" />
                     </g>
                   </g>
