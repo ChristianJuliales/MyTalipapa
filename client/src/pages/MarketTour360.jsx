@@ -1037,19 +1037,17 @@ export default function MarketTour360() {
             const target = hit.object.userData.targetStallInfo;
             if (target) {
               if (stateRef.current.currentStall.id === '1(u)' && target.stall.id === '13(u)') {
-                dynamicLabel = `Go Left to ${target.stall.name || 'Stall ' + target.stall.id}`;
+                dynamicLabel = 'Turn Left';
               } else if (stateRef.current.currentStall.id === '24' && target.stall.id === '12(u)') {
-                dynamicLabel = `Go Left to ${target.stall.name || 'Stall ' + target.stall.id}`;
+                dynamicLabel = 'Turn Left';
               } else if (stateRef.current.currentStall.id === '24' && target.sectionKey === 'veggies' && target.stall.id === '12') {
-                dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
+                dynamicLabel = 'Turn Right';
               } else if (stateRef.current.currentStall.id === '12(u)' && target.stall.id === '24') {
-                dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
+                dynamicLabel = 'Turn Right';
               } else if (stateRef.current.currentStall.id === '13(u)' && target.stall.id === '1(u)') {
-                dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
-              } else if (stateRef.current.currentStall.id === '24' && target.sectionKey === 'fish' && target.stall.id === '21') {
-                dynamicLabel = `Forward to Stall 11 ZONE A & Stall 21 ZONE B`;
+                dynamicLabel = 'Turn Right';
               } else {
-                dynamicLabel = `Forward to ${target.stall.name || 'Stall ' + target.stall.id}`;
+                dynamicLabel = 'Go Forward';
               }
             }
           }
@@ -1131,7 +1129,15 @@ export default function MarketTour360() {
 
           // Find nearest stall in this direction
           const currentStall = stateRef.current.currentStall;
-          const nearestStallInfo = findNearestStallInDirection(currentStall, compassDeg);
+          let nearestStallInfo = findNearestStallInDirection(currentStall, compassDeg);
+
+          // Override navigation target for stall 24 -> fish-21 to navigate to fish-11 instead
+          if (currentStall && currentStall.id === '24' && nearestStallInfo && nearestStallInfo.sectionKey === 'fish' && nearestStallInfo.stall.id === '21') {
+            nearestStallInfo = {
+              ...nearestStallInfo,
+              stall: { id: '11', name: 'Stall #11' }
+            };
+          }
 
           // Update the dynamic forward arrow
           const forwardMesh = hotspotMeshes.current.find(m => m.userData.type === 'go_forward');
@@ -1366,7 +1372,7 @@ export default function MarketTour360() {
           className="absolute z-40 bg-white/95 text-slate-800 text-xs font-bold px-3 py-1.5 rounded-xl pointer-events-none shadow-xl border border-black/10 -translate-x-1/2 -translate-y-12 backdrop-blur-sm transition-all"
           style={{ left: mousePos.x, top: mousePos.y }}
         >
-          {hoveredHotspot.dynamicLabel && hoveredHotspot.dynamicLabel.startsWith('Go Left') ? '←' : hoveredHotspot.dynamicLabel && hoveredHotspot.dynamicLabel.startsWith('Go Right') ? '→' : (hoveredHotspot.type === 'go_forward' || (hoveredHotspot.dynamicLabel && hoveredHotspot.dynamicLabel.startsWith('Forward'))) ? '↑' : hoveredHotspot.dynamicLabel === 'Backward' ? '↓' : 'i'} {hoveredHotspot.dynamicLabel || hoveredHotspot.label}
+          {hoveredHotspot.dynamicLabel && hoveredHotspot.dynamicLabel === 'Turn Left' ? '←' : hoveredHotspot.dynamicLabel && hoveredHotspot.dynamicLabel === 'Turn Right' ? '→' : (hoveredHotspot.type === 'go_forward' || (hoveredHotspot.dynamicLabel && hoveredHotspot.dynamicLabel === 'Go Forward')) ? '↑' : hoveredHotspot.dynamicLabel === 'Backward' ? '↓' : 'i'} {hoveredHotspot.dynamicLabel || hoveredHotspot.label}
         </div>
       )}
 
