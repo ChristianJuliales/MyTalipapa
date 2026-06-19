@@ -797,19 +797,8 @@ export default function MarketTour360() {
     let x = 1020;
     let y = 635 + yOffset;
 
-    let rawKey = `${category}-${stall.id}`;
-    let cleanKey = `${category}-${cleanNum}`;
-
-    // Fix minimap positions for meat stalls that have Zone A coords but are actually in Zone E or F
-    if (category === 'meat') {
-      if (zoneLetter === 'E' && ['1', '2', '3', '4', '5', '12', '13'].includes(stall.id)) {
-        rawKey = `meat-${stall.id}(u)`;
-        cleanKey = `meat-${stall.id}(u)`;
-      } else if (zoneLetter === 'F' && ['1', '2', '3', '4', '8', '9', '10'].includes(stall.id)) {
-        rawKey = `meat-${stall.id}(u2)`;
-        cleanKey = `meat-${stall.id}(u2)`;
-      }
-    }
+    const rawKey = `${category}-${stall.id}`;
+    const cleanKey = `${category}-${cleanNum}`;
 
     if (SVG_STALL_COORDS[rawKey]) {
       x = SVG_STALL_COORDS[rawKey].x;
@@ -1040,13 +1029,15 @@ export default function MarketTour360() {
           } else if (hit.object.userData.type === 'go_forward') {
             const target = hit.object.userData.targetStallInfo;
             if (target) {
-              if ((stateRef.current.currentStall.id === '1(u)' && target.stall.id === '13(u)') || (stateRef.current.currentStall.id === '1' && target.stall.id === '13') || (stateRef.current.currentStall.id === '13(u)' && target.stall.id === '1(u)') || (stateRef.current.currentStall.id === '13' && target.stall.id === '1')) {
+              if (stateRef.current.currentStall.id === '1(u)' && target.stall.id === '13(u)') {
                 dynamicLabel = `Go Left to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else if (stateRef.current.currentStall.id === '24' && target.stall.id === '12(u)') {
                 dynamicLabel = `Go Left to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else if (stateRef.current.currentStall.id === '24' && target.sectionKey === 'veggies' && target.stall.id === '12') {
                 dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else if (stateRef.current.currentStall.id === '12(u)' && target.stall.id === '24') {
+                dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
+              } else if (stateRef.current.currentStall.id === '13(u)' && target.stall.id === '1(u)') {
                 dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else {
                 dynamicLabel = `Forward to ${target.stall.name || 'Stall ' + target.stall.id}`;
@@ -1118,8 +1109,8 @@ export default function MarketTour360() {
           northOffset = 180; // Correct cone to align with the actual camera orientation for the entire row
         }
 
-        // Sync compass rotation (0 deg = North). Use -theta because camera X is inverted (scale(-1, 1, 1))
-        const deg = Math.round((-theta * 180) / Math.PI) + northOffset;
+        // Sync compass rotation (0 deg = North)
+        const deg = Math.round((theta * 180) / Math.PI) + northOffset;
         const compassDeg = ((deg % 360) + 360) % 360; // ensure positive
 
         // Optimize: Only recalculate heavy math and React state if the degree actually changed
@@ -1144,13 +1135,15 @@ export default function MarketTour360() {
 
               // Rotate the arrow to point in the direction of the camera
               let arrowRotationOffset = -Math.PI / 2;
-              if ((currentStall.id === '1(u)' && nearestStallInfo.stall.id === '13(u)') || (currentStall.id === '1' && nearestStallInfo.stall.id === '13') || (currentStall.id === '13(u)' && nearestStallInfo.stall.id === '1(u)') || (currentStall.id === '13' && nearestStallInfo.stall.id === '1')) {
+              if (currentStall.id === '1(u)' && nearestStallInfo.stall.id === '13(u)') {
                 arrowRotationOffset = 0; // Point left
               } else if (currentStall.id === '24' && nearestStallInfo.stall.id === '12(u)') {
                 arrowRotationOffset = 0; // Point left
               } else if (currentStall.id === '24' && nearestStallInfo.sectionKey === 'veggies' && nearestStallInfo.stall.id === '12') {
                 arrowRotationOffset = Math.PI; // Point right
               } else if (currentStall.id === '12(u)' && nearestStallInfo.stall.id === '24') {
+                arrowRotationOffset = Math.PI; // Point right
+              } else if (currentStall.id === '13(u)' && nearestStallInfo.stall.id === '1(u)') {
                 arrowRotationOffset = Math.PI; // Point right
               }
               forwardMesh.rotation.set(-Math.PI / 2, 0, -theta + arrowRotationOffset);
@@ -1565,8 +1558,8 @@ export default function MarketTour360() {
                     setStallDropdownOpen(false)
                   }}
                   className={`px-3 py-1.5 rounded-xl text-left text-xs font-bold transition-all cursor-pointer ${idx === stallIndex
-                      ? 'bg-[#1a5c2a] text-white'
-                      : 'text-slate-700 hover:bg-black/5'
+                    ? 'bg-[#1a5c2a] text-white'
+                    : 'text-slate-700 hover:bg-black/5'
                     }`}
                 >
                   {st.name}
