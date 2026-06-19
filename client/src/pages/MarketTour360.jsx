@@ -1107,7 +1107,7 @@ export default function MarketTour360() {
 
         if (currentStallId === '1(u)' && activeSection === 'meat') {
           northOffset = -90; // Calibrate left turn to point to Stall #13
-          minimapNorthOffset = 90;
+          minimapNorthOffset = 270;
         } else if (needs180Offset) {
           northOffset = 180; // Correct cone to align with the actual camera orientation for the entire row
           minimapNorthOffset = 180;
