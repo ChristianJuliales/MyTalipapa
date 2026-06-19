@@ -1118,8 +1118,8 @@ export default function MarketTour360() {
           northOffset = 180; // Correct cone to align with the actual camera orientation for the entire row
         }
 
-        // Sync compass rotation (0 deg = North)
-        const deg = Math.round((theta * 180) / Math.PI) + northOffset;
+        // Sync compass rotation (0 deg = North). Use -theta because camera X is inverted (scale(-1, 1, 1))
+        const deg = Math.round((-theta * 180) / Math.PI) + northOffset;
         const compassDeg = ((deg % 360) + 360) % 360; // ensure positive
 
         // Optimize: Only recalculate heavy math and React state if the degree actually changed
