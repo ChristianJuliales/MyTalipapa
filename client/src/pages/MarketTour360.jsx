@@ -839,9 +839,9 @@ export default function MarketTour360() {
         const dy = targetCoords.y - currentCoords.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        // Filter distance: max 410px so it doesn't jump through walls across the map, min 10px
-        // (410px allows jumping the 400px gap between x=30 and x=430 for Zone E Stall 1 to 13)
-        if (distance < 10 || distance > 410) return;
+        // Filter distance: max 510px so it doesn't jump through walls across the map, min 10px
+        // (510px allows jumping the 500px gap between x=30 and x=530 for Zone E Stall 1 to 13)
+        if (distance < 10 || distance > 510) return;
 
         const mapAngleRad = Math.atan2(dy, dx);
         const mapAngleDeg = (mapAngleRad * 180) / Math.PI;
