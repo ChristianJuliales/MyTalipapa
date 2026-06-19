@@ -1140,6 +1140,23 @@ export default function MarketTour360() {
             };
           }
 
+                    // Override navigation target for stall 11 forward to stall 12 (meat) in Zone A
+          if (currentStall && currentStall.id === '11' && nearestStallInfo && nearestStallInfo.stall.id === '12' && nearestStallInfo.sectionKey === 'meat') {
+            nearestStallInfo = {
+              ...nearestStallInfo,
+              zone: 'Zone A',
+              stall: { id: '12', name: 'Stall #12' }
+            };
+          }
+          // Override navigation target for stall 12 forward to stall 13 (meat) in Zone A
+          if (currentStall && currentStall.id === '12' && nearestStallInfo && nearestStallInfo.stall.id === '13' && nearestStallInfo.sectionKey === 'meat') {
+            nearestStallInfo = {
+              ...nearestStallInfo,
+              zone: 'Zone A',
+              stall: { id: '13', name: 'Stall #13' }
+            };
+          }
+
           // Update the dynamic forward arrow
           const forwardMesh = hotspotMeshes.current.find(m => m.userData.type === 'go_forward');
           if (forwardMesh) {
