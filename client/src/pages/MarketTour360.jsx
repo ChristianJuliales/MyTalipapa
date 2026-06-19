@@ -797,8 +797,19 @@ export default function MarketTour360() {
     let x = 1020;
     let y = 635 + yOffset;
 
-    const rawKey = `${category}-${stall.id}`;
-    const cleanKey = `${category}-${cleanNum}`;
+    let rawKey = `${category}-${stall.id}`;
+    let cleanKey = `${category}-${cleanNum}`;
+
+    // Fix minimap positions for meat stalls that have Zone A coords but are actually in Zone E or F
+    if (category === 'meat') {
+      if (zoneLetter === 'E' && ['1', '2', '3', '4', '5', '12', '13'].includes(stall.id)) {
+        rawKey = `meat-${stall.id}(u)`;
+        cleanKey = `meat-${stall.id}(u)`;
+      } else if (zoneLetter === 'F' && ['1', '2', '3', '4', '8', '9', '10'].includes(stall.id)) {
+        rawKey = `meat-${stall.id}(u2)`;
+        cleanKey = `meat-${stall.id}(u2)`;
+      }
+    }
 
     if (SVG_STALL_COORDS[rawKey]) {
       x = SVG_STALL_COORDS[rawKey].x;
