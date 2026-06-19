@@ -1046,6 +1046,8 @@ export default function MarketTour360() {
                 dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else if (stateRef.current.currentStall.id === '13(u)' && target.stall.id === '1(u)') {
                 dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
+              } else if (stateRef.current.currentStall.id === '24' && target.sectionKey === 'fish' && target.stall.id === '11') {
+                dynamicLabel = `Forward to Stall 11 ZONE A & Stall 21 ZONE B`;
               } else {
                 dynamicLabel = `Forward to ${target.stall.name || 'Stall ' + target.stall.id}`;
               }
@@ -1079,8 +1081,8 @@ export default function MarketTour360() {
         const activeSection = stateRef.current.activeSectionKey;
 
         // --- EXISTING CONDITIONS ---
-        // Meat section
-        const zoneEMeatUpsideDown = ['13(u)', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'];
+        // 1. Zone E right column (Meat)
+        const zoneEMeatUpsideDown = ['13(u)', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
         const zoneAMeatUpsideDown = ['12', '13'];
         // Fish section
         const zoneAFishUpsideDown = ['11', '12', '13', '14', '15', '16', '17', '18', '19', '20'];
