@@ -1105,7 +1105,10 @@ export default function MarketTour360() {
 
         const needs180Offset = isZoneEMeat || isZoneAMeat || isZoneFMeat || isZoneAFish || isFishMeatZoneA || isFishMeatZoneC || isVeggiesMeatHallway || isVeggiesOpposite;
 
-        if (needs180Offset) {
+        if (currentStallId === '1(u)' && activeSection === 'meat') {
+          northOffset = 90; // Calibrate camera to face East at theta=0
+          minimapNorthOffset = 90;
+        } else if (needs180Offset) {
           northOffset = 180; // Correct cone to align with the actual camera orientation for the entire row
           minimapNorthOffset = 180;
         }
