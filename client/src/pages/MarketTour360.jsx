@@ -1029,15 +1029,13 @@ export default function MarketTour360() {
           } else if (hit.object.userData.type === 'go_forward') {
             const target = hit.object.userData.targetStallInfo;
             if (target) {
-              if (stateRef.current.currentStall.id === '1(u)' && target.stall.id === '13(u)') {
+              if ((stateRef.current.currentStall.id === '1(u)' && target.stall.id === '13(u)') || (stateRef.current.currentStall.id === '1' && target.stall.id === '13') || (stateRef.current.currentStall.id === '13(u)' && target.stall.id === '1(u)') || (stateRef.current.currentStall.id === '13' && target.stall.id === '1')) {
                 dynamicLabel = `Go Left to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else if (stateRef.current.currentStall.id === '24' && target.stall.id === '12(u)') {
                 dynamicLabel = `Go Left to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else if (stateRef.current.currentStall.id === '24' && target.sectionKey === 'veggies' && target.stall.id === '12') {
                 dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else if (stateRef.current.currentStall.id === '12(u)' && target.stall.id === '24') {
-                dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
-              } else if (stateRef.current.currentStall.id === '13(u)' && target.stall.id === '1(u)') {
                 dynamicLabel = `Go Right to ${target.stall.name || 'Stall ' + target.stall.id}`;
               } else {
                 dynamicLabel = `Forward to ${target.stall.name || 'Stall ' + target.stall.id}`;
@@ -1135,15 +1133,13 @@ export default function MarketTour360() {
 
               // Rotate the arrow to point in the direction of the camera
               let arrowRotationOffset = -Math.PI / 2;
-              if (currentStall.id === '1(u)' && nearestStallInfo.stall.id === '13(u)') {
+              if ((currentStall.id === '1(u)' && nearestStallInfo.stall.id === '13(u)') || (currentStall.id === '1' && nearestStallInfo.stall.id === '13') || (currentStall.id === '13(u)' && nearestStallInfo.stall.id === '1(u)') || (currentStall.id === '13' && nearestStallInfo.stall.id === '1')) {
                 arrowRotationOffset = 0; // Point left
               } else if (currentStall.id === '24' && nearestStallInfo.stall.id === '12(u)') {
                 arrowRotationOffset = 0; // Point left
               } else if (currentStall.id === '24' && nearestStallInfo.sectionKey === 'veggies' && nearestStallInfo.stall.id === '12') {
                 arrowRotationOffset = Math.PI; // Point right
               } else if (currentStall.id === '12(u)' && nearestStallInfo.stall.id === '24') {
-                arrowRotationOffset = Math.PI; // Point right
-              } else if (currentStall.id === '13(u)' && nearestStallInfo.stall.id === '1(u)') {
                 arrowRotationOffset = Math.PI; // Point right
               }
               forwardMesh.rotation.set(-Math.PI / 2, 0, -theta + arrowRotationOffset);
